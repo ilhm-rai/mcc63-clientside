@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Region Add - MCC 63</title>
-</head>
-<body>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Region Add - MCC 63</title>
+    </head>
+    <body>
 
-    <form action="/region/create" method="POST">
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name">
-        <button type="submit">Submit</button>
-    </form>
+        <form th:action="@{/region/create}" th:object="${region}" th:method="POST">
+            <label for="name">Name</label>
+            <input type="text" th:field="*{name}"/>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</p>
+            <br/>
+            <button type="submit">Submit</button>
+        </form>
 
-</body>
+    </body>
 </html>

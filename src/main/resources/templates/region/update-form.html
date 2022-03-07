@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Region Update - MCC 63</title>
-</head>
-<body>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Region Update - MCC 63</title>
+    </head>
+    <body>
 
-<form th:action="@{/region/update/{id} (id = ${region.id})}" th:method="PUT">
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name" th:value="${region.name}">
-    <button type="submit">Submit</button>
-</form>
+        <form th:action="@{/region/update/{id} (id = ${region.id})}" th:object="${region}" th:method="PUT">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" th:value="${region.name}"/>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</p>
+            <button type="submit">Submit</button>
+        </form>
 
-</body>
+    </body>
 </html>

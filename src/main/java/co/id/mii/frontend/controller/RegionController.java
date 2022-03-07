@@ -2,16 +2,18 @@ package co.id.mii.frontend.controller;
 
 import co.id.mii.frontend.model.Region;
 import co.id.mii.frontend.service.RegionService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/region")
 public class RegionController {
 
-    private RegionService regionService;
+    private final RegionService regionService;
 
     @Autowired
     public RegionController(RegionService regionService) {
@@ -32,12 +34,16 @@ public class RegionController {
     }
 
     @GetMapping("/create")
-    public String create() {
+    public String create(Region region) {
         return "region/create-form";
     }
 
     @PostMapping("/create")
-    public String create(Region region) {
+    public String create(@Valid Region region, BindingResult result) {
+        if (result.hasErrors()) {
+            return "region/create-form";
+        }
+        
         regionService.create(region);
         return "redirect:/region";
     }
@@ -49,7 +55,12 @@ public class RegionController {
     }
 
     @PutMapping("/update/{id}")
-    public String update(@PathVariable("id") Long id, Region region){
+    public String update(@PathVariable("id") Long id, @Valid Region region, 
+            BindingResult result){
+        if (result.hasErrors()) {
+            return "region/update-form";
+        }
+        
         regionService.update(region, id);
         return "redirect:/region";
     }
