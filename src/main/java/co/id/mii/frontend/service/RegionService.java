@@ -5,27 +5,49 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class RegionService {
 
     private List<Region> regions = new ArrayList<>();
-
-    public RegionService() {
-        regions.add(Region.builder().id(1L).name("Asia").build());
-        regions.add(Region.builder().id(2L).name("Europa").build());
-        regions.add(Region.builder().id(3L).name("America").build());
-        regions.add(Region.builder().id(4L).name("Africa").build());
+    private RestTemplate restTemplate;
+    
+    @Value("${app.baseUrl}/region")
+    private String url;
+    
+    @Autowired
+    public RegionService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     public List<Region> getAll() {
-        return this.regions;
+        try {
+            ResponseEntity<List<Region>> response = restTemplate
+                    .exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Region>>(){});
+            
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody();
+            }
+        } catch (ResponseStatusException e) {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Server unavailable");
+        }
+        
+        return regions;
     }
 
     public Region getById(Long id) {
         return this.regions.stream()
-                .filter(r -> r.getId() == id)
+                .filter(r -> Objects.equals(r.getId(), id))
                 .collect(Collectors.toList())
                 .get(0);
     }
