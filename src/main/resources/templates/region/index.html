@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Region Page - MCC 53</title>
+</head>
+<body>
+    <h1>Region List</h1><br>
+
+    <a th:href="@{/region/create}">Add New Region</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="region : ${regions}">
+                <td th:text="${region.id}"></td>
+                <td th:text="${region.name}"></td>
+                <td>
+                    <a th:href="@{/region/{id} (id = ${region.id})}">Detail</a>
+                    <a th:href="@{/region/update/{id} (id = ${region.id})}">Update</a>
+                    <form th:action="@{/region/delete/{id} (id = ${region.id})}" th:method="DELETE">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
