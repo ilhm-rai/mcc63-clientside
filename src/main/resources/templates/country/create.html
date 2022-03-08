@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Country Add - MCC 63</title>
+    </head>
+    <body>
+
+        <form th:action="@{/country/create}" th:object="${countryDto}" th:method="POST">
+            <label for="code">Code</label>
+            <input type="text" th:field="*{code}" id="code"/>
+            <p th:if="${#fields.hasErrors('code')}" th:errors="*{code}">Name error</p>
+            <label for="name">Name</label>
+            <input type="text" th:field="*{name}" id="name"/>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</p>
+            <label for="regionId">Region</label>
+            <select th:field="*{regionId}" id="regionId">
+                <option value="">Choose region</option>
+                <option th:each="region: ${regions}" th:text="${region.name}" th:value="${region.id}">{region name}</option>
+            </select>
+            <p th:if="${#fields.hasErrors('regionId')}" th:errors="*{regionId}">Name error</p>
+            <br/>
+            <button type="submit">Submit</button>
+        </form>
+
+    </body>
+</html>

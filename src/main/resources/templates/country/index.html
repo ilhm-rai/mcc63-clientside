@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Country Page - MCC 53</title>
+</head>
+<body>
+    <h1>Country List</h1><br/>
+
+    <a th:href="@{/country/create}">Add New Country</a>
+    <table width="100%" border="1px" style="margin-top: 5px">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Region</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="country : ${countries}">
+                <td th:text="${country.code}"></td>
+                <td th:text="${country.name}"></td>
+                <td th:text="${country.region.name}"></td>
+                <td>
+                    <a th:href="@{/country/{id} (id = ${country.id})}">Detail</a>
+                    <a th:href="@{/country/edit/{id} (id = ${country.id})}">Edit</a>
+                    <form th:action="@{/country/delete/{id} (id = ${country.id})}" th:method="DELETE">
+                        <button type="submit" onclick="return confirm('Click \'OK\' to delete...');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
