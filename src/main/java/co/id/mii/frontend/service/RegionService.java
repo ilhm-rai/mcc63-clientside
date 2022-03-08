@@ -18,9 +18,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class RegionService {
-
-    private List<Region> regions = new ArrayList<>();
-    private RestTemplate restTemplate;
+    
+    private final RestTemplate restTemplate;
 
     @Value("${app.baseUrl}/region")
     private String url;
@@ -31,6 +30,7 @@ public class RegionService {
     }
 
     public List<Region> getAll() {
+        List<Region> regions = new ArrayList<>();
         try {
             ResponseEntity<List<Region>> response = restTemplate
                     .exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Region>>() {
@@ -40,7 +40,7 @@ public class RegionService {
                 return response.getBody();
             }
         } catch (ResponseStatusException e) {
-            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Server unavailable");
+            throw new ResponseStatusException(e.getStatus(), e.getMessage());
         }
 
         return regions;
@@ -53,7 +53,8 @@ public class RegionService {
 //                .get(0);
         Region region = new Region();
         try {
-            ResponseEntity<Region> response = restTemplate.exchange(url.concat("/" + id), HttpMethod.GET, null, new ParameterizedTypeReference<Region>() {
+            ResponseEntity<Region> response = restTemplate.exchange(url.concat("/" + id), HttpMethod.GET, null, 
+                    new ParameterizedTypeReference<Region>() {
             });
 
             if (response.getStatusCode() == HttpStatus.OK) {
