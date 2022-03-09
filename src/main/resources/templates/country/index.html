@@ -1,39 +1,82 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
-    <title>Country Page - MCC 53</title>
+    <meta charset="UTF-8" />
+    <title>Country - MCC 63</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
+
 <body>
-    <h1>Country List</h1><br/>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">MCC63</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/region">Region</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/country">Country</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
 
-    <a th:href="@{/country/create}">Add New Country</a>
-    <table width="100%" border="1px" style="margin-top: 5px">
-        <thead>
-            <tr>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Region</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="country : ${countries}">
-                <td th:text="${country.code}"></td>
-                <td th:text="${country.name}"></td>
-                <td th:text="${country.region.name}"></td>
-                <td>
-                    <a th:href="@{/country/{id} (id = ${country.id})}">Detail</a>
-                    <a th:href="@{/country/edit/{id} (id = ${country.id})}">Edit</a>
-                    <form th:action="@{/country/delete/{id} (id = ${country.id})}" th:method="DELETE">
-                        <button type="submit" onclick="return confirm('Click \'OK\' to delete...');">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${message}">
+            <span th:text="${message}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
 
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-primary" href="/country/create">Add Country</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-responsive table-bordered caption-top">
+                    <caption class="h5 text-black">List of Countries</caption>
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Region</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="country, iterStat : ${countries}">
+                            <th scope="row" th:text="${iterStat.count}"></th>
+                            <td th:text="${country.code}"></td>
+                            <td th:text="${country.name}"></td>
+                            <td th:text="${country.region.name}"></td>
+                            <td>
+                                <a class="btn btn-sm btn-secondary"
+                                    th:href="@{/country/{id} (id = ${country.id})}">Detail</a>
+                                <a class="btn btn-sm btn-secondary"
+                                    th:href="@{/country/edit/{id} (id = ${country.id})}">Edit</a>
+                                <form class="d-inline" th:action="@{/country/delete/{id} (id = ${country.id})}"
+                                    method="DELETE">
+                                    <button class="btn btn-sm btn-danger" type="submit"
+                                        onclick="(function(){return confirm('Click \'OK\' to delete...')})();">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

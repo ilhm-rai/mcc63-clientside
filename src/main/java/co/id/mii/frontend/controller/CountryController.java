@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -56,23 +57,24 @@ public class CountryController {
     }
 
     @PostMapping("/create")
-    public String save(@Valid CountryDto countryDto, BindingResult result, Model model) {
+    public String save(@Valid CountryDto countryDto, BindingResult result, Model model, RedirectAttributes ra) {
         if (result.hasErrors()) {
             model.addAttribute("regions", regionService.getAll());
             return "country/create";
         }
 
         countryService.create(countryDto);
+        ra.addFlashAttribute("message", "Country succesfully created...");
         return "redirect:/country";
     }
-    
+
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, CountryDto countryDto, Model model) {
         model.addAttribute("regions", regionService.getAll());
         model.addAttribute("country", countryService.getById(id));
         return "country/edit";
     }
-    
+
     @PutMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id, @Valid CountryDto countryDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -83,7 +85,7 @@ public class CountryController {
         countryService.create(countryDto);
         return "redirect:/country";
     }
-    
+
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         countryService.delete(id);
