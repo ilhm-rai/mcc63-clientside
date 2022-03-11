@@ -1,38 +1,78 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
-    <title>Region Page - MCC 53</title>
+    <meta charset="UTF-8" />
+    <title>Region - MCC 63</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
+
 <body>
-    <h1>Region List</h1><br/>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">MCC63</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/region">Region</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/country">Country</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
 
-    <a th:href="@{/region/create}">Add New Region</a>
+        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${message}">
+            <span th:text="${message}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="region : ${regions}">
-                <td th:text="${region.id}"></td>
-                <td th:text="${region.name}"></td>
-                <td>
-                    <a th:href="@{/region/{id} (id = ${region.id})}">Detail</a>
-                    <a th:href="@{/region/update/{id} (id = ${region.id})}">Update</a>
-                    <form th:action="@{/region/delete/{id} (id = ${region.id})}" th:method="DELETE">
-                        <button type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-primary" th:href="@{/region/create}">Add New Region</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered caption-top">
+                    <caption class="h5 text-black">List of Regions</caption>
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="region, iterStat : ${regions}">
+                            <th scope="row" th:text="${iterStat.count}"></th>
+                            <td th:text="${region.name}"></td>
+                            <td>
+                                <a class="btn btn-sm btn-secondary"
+                                    th:href="@{/region/{id} (id = ${region.id})}">Detail</a>
+                                <a class="btn btn-sm btn-secondary"
+                                    th:href="@{/region/update/{id} (id = ${region.id})}">Update</a>
+                                <form th:action="@{/region/delete/{id} (id = ${region.id})}" th:method="DELETE"
+                                    class="d-inline">
+                                    <button type="submit" onclick="return confirm('Click \'OK\' to delete...');"
+                                        class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
