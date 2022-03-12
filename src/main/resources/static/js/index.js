@@ -37,23 +37,26 @@ var getAllCountry = function () {
     type: 'GET',
     success: (res) => {
       let html = '';
-      $.each(res, (i, country) => {
-        html += `
-                <tr>
-                    <td>${++i}</td>
-                    <td>${country.code}</td>
-                    <td>${country.name}</td>
-                    <td>${country.region.name}</td>
-                    <td>
-                        <button class="btn btn-sm btn-secondary me-2">Detail</button>
-                        <button class="btn btn-sm btn-secondary me-2">Update</button>
-                        <button onclick="onDeleteCountry(${country.id})" type="submit" class="btn btn-sm btn-danger">Delete</button>
-                    </td>
-                </tr>
-            `;
-      });
+
+      var i = 0;
+      html = res.reduce((acc, curr) => {
+        return acc + `
+        <tr>
+            <td>${++i}</td>
+            <td>${curr.code}</td>
+            <td>${curr.name}</td>
+            <td>${curr.region.name}</td>
+            <td>
+                <button class="btn btn-sm btn-secondary me-2">Detail</button>
+                <button class="btn btn-sm btn-secondary me-2">Update</button>
+                <button type="submit" class="btn btn-sm btn-danger js-delete" data-id="${curr.id}">Delete</button>
+            </td>
+        </tr>
+    `;
+      }, html);
 
       $('#countryTable tbody').html(html);
+      onDeleteCountry();
     },
     error: (err) => {
       console.log(err);
@@ -79,35 +82,38 @@ var getAllRegion = function () {
   });
 };
 
-var onDeleteCountry = function (id) {
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "data will be deleted permanently",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Delete'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      $.ajax({
-        url: '/country/remove/' + id,
-        type: 'DELETE',
-        success: (res) => {
-          toast().fire({
-            icon: 'success',
-            title: res.message
-          });
-          getAllCountry();
-        },
-        error: (err) => {
-          toast().fire({
-            icon: 'error',
-            title: err.message
-          });
-        }
-      });
-    }
+var onDeleteCountry = function () {
+  $('.js-delete').on('click', function () {
+    var context = this;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "data will be deleted permanently",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Delete'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: '/country/remove/' + this.dataset.id,
+          type: 'DELETE',
+          success: (res) => {
+            toast().fire({
+              icon: 'success',
+              title: res.message
+            });
+            getAllCountry();
+          },
+          error: (err) => {
+            toast().fire({
+              icon: 'error',
+              title: err.message
+            });
+          }
+        });
+      }
+    });
   });
 };
 
