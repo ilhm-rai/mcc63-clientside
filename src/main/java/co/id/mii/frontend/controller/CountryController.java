@@ -117,6 +117,17 @@ public class CountryController {
         return ResponseEntity.ok(new ResponseData("success", "Country has been created"));
     }
 
+    @PutMapping("/update/{id}")
+    public @ResponseBody ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody CountryDto countryDto,
+            BindingResult result) {
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+
+        countryService.update(id, countryDto);
+        return ResponseEntity.ok(new ResponseData("success", "Country has been updated"));
+    }
+
     @DeleteMapping("/remove/{id}")
     public @ResponseBody ResponseEntity remove(@PathVariable("id") Long id) {
         countryService.delete(id);

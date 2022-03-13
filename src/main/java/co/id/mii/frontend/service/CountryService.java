@@ -84,6 +84,19 @@ public class CountryService {
         }
     }
 
+    public void update(Long id, CountryDto countryDto) {
+        try {
+            countryDto.setId(id);
+            restTemplate.exchange(url.concat("/" + id),
+                    HttpMethod.PUT,
+                    new HttpEntity<>(countryDto),
+                    new ParameterizedTypeReference<CountryDto>() {
+                    });
+        } catch (ResponseStatusException ex) {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage());
+        }
+    }
+
     public void delete(Long id) {
         try {
             restTemplate.exchange(url.concat("/" + id), HttpMethod.DELETE, null,
