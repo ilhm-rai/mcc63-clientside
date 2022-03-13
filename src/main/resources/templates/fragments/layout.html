@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="head(title)">
+<head th:fragment="head(title, links, scripts)">
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title th:replace="${title}">Title &mdash; Metrodata</title>
@@ -11,31 +11,16 @@
   <link rel="stylesheet" th:href="@{/vendor/fontawesome-free/css/all.css}">
 
   <!-- CSS Libraries -->
+  <link rel="stylesheet" th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}">
 
   <!-- Template CSS -->
   <link rel="stylesheet" th:href="@{/css/style.css}">
   <link rel="stylesheet" th:href="@{/css/components.css}">
 
   <!-- Page Specific CSS File -->
-  <link rel="stylesheet" href="#" th:fragment="css">
-</head>
+  <th:block th:replace="${links}"></th:block>
 
-<body th:fragment="app(content)">
-  <div id="app">
-    <div class="main-wrapper">
-      <div class="navbar-bg"></div>
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg main-navbar" th:replace="fragments/navbar :: navbar"></nav>
-
-      <!-- Sidebar -->
-      <div class="main-sidebar" th:replace="fragments/sidebar :: sidebar"></div>
-
-      <!-- Main Content -->
-      <div class="main-content" style="min-height: 555px !important;" th:insert="${content}"></div>
-
-      <footer class="main-footer" th:replace="fragments/footer :: footer"></footer>
-    </div>
-  </div>
+  <link rel="shortcut icon" th:href="@{/img/metrodata.ico}" type="image/x-icon">
 
   <!-- General JS Scripts -->
   <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
@@ -44,12 +29,38 @@
   <script th:src="@{/js/stisla.js}"></script>
 
   <!-- JS Libraies -->
+  <script th:src="@{/js/sweetalert.min.js}"></script>
+  <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+  <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
 
   <!-- Template JS File -->
   <script th:src="@{/js/scripts.js}"></script>
   <script th:src="@{/js/custom.js}"></script>
 
   <!-- Page Specific JS File -->
+  <th:block th:replace="${scripts}"></th:block>
+</head>
+
+<body>
+  <div id="app" th:fragment="app(content)">
+    <div class="main-wrapper" id="main-wrapper">
+      <div class="navbar-bg"></div>
+
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg main-navbar" th:replace="fragments/navbar :: navbar"></nav>
+
+      <!-- Sidebar -->
+      <div class="main-sidebar" th:replace="fragments/sidebar :: sidebar"></div>
+
+      <!-- Main Content -->
+      <div class="main-content" style="min-height: 555px !important;">
+        <div th:replace="${content}"></div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="main-footer" th:replace="fragments/footer :: footer"></footer>
+    </div>
+  </div>
 </body>
 
 </html>

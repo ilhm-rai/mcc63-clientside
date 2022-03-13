@@ -1,124 +1,107 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8" />
-    <title>Country - MCC 63</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<head th:replace="fragments/layout :: head(~{:: title}, ~{:: link}, ~{:: script})">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country &mdash; Metrodata</title>
+
+    <!-- Page Specific CSS File -->
+    <link rel="stylesheet" href="#">
+
+    <!-- Page Specific JS File -->
+    <script th:src="@{/js/country.js}"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">MCC63</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/region">Region</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/country">Country</a>
-                    </li>
-                </ul>
+    <div id="app" th:replace="fragments/layout :: app(~{:: .section})">
+        <section class="section">
+            <div class="section-header">
+                <h1>Country</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item"><a th:href="@{/home}">Home</a></div>
+                    <div class="breadcrumb-item active">Country</div>
+                </div>
             </div>
-        </div>
-    </nav>
-    <div class="container mt-4">
+            <div class="section-body">
 
-        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${message}">
-            <span th:text="${message}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+                <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${message}">
+                    <span th:text="${message}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
 
-        <div class="card">
-            <div class="card-header">
-                <a class="btn btn-primary" href="/country/create">Create Country</a>
-                <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#countryModal">Open
-                    Modal</button>
+                <div class="card">
+                    <div class="card-header">
+                        <button class="btn btn-primary js-create" data-toggle="modal" data-target="#countryModal"><span
+                                class="fa fa-plus mr-2"></span>Create</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped display" width="100%" cellspacing="0" id="countryTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Region</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- List of Countries -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Region</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <table class="table table-responsive table-bordered caption-top" id="countryTable">
-                    <caption class="h5 text-black">List of Countries</caption>
-                    <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Code</th>
-                            <th>Name</th>
-                            <th>Region</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- List of Countries -->
-                        <tr th:each="country, iterStat : ${countries}">
-                            <th scope="row" th:text="${iterStat.count}"></th>
-                            <td th:text="${country.code}"></td>
-                            <td th:text="${country.name}"></td>
-                            <td th:text="${country.region.name}"></td>
-                            <td>
-                                <a class="btn btn-sm btn-secondary"
-                                    th:href="@{/country/{id} (id = ${country.id})}">Detail</a>
-                                <a class="btn btn-sm btn-secondary"
-                                    th:href="@{/country/edit/{id} (id = ${country.id})}">Edit</a>
-                                <form class="d-inline" th:action="@{/country/delete/{id} (id = ${country.id})}"
-                                    th:method="DELETE">
-                                    <button class="btn btn-sm btn-danger" type="submit"
-                                        onclick="return confirm('Click \'OK\' to delete...');">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </section>
     </div>
-    <!--  Modal Form-->
-    <div class="modal fade" id="countryModal" tabindex="-1" aria-labelledby="countryModal" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="countryModal" tabindex="-1" aria-labelledby="countryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="countryModal">Country</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="countryModalLabel">Country Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                    <form class="row needs-validation" id="countryForm">
-                        <div class="col-12">
-                            <label for="code" class="form-label">Code</label>
+                    <form class="" id="countryForm">
+                        <div class="form-group">
+                            <label for="code">Code</label>
                             <input type="text" id="code" name="code" class="form-control">
                         </div>
-
-                        <div class="col-12">
-                            <label for="name" class="form-label">Name</label>
+                        <div class="form-group">
+                            <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name">
                         </div>
-
-                        <div class="col-12">
+                        <div class="form-group">
                             <label for="regionId" class="form-label">Region</label>
-                            <select class="form-select" id="regionId" name="regionId">
-                                <option disabled selected>Select Region</option>
+                            <select class="custom-select" id="regionId" name="regionId">
+                                <option disabled selected value="">Select Region</option>
                                 <!-- List of Region -->
                             </select>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer mt-3">
+                <div class="modal-footer bg-whitesmoke">
                     <button type="submit" class="btn btn-primary" form="countryForm">Submit</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-    <script src="/js/jquery-3.6.0.min.js"></script>
-    <script src="/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/sweetalert.min.js"></script>
-    <script src="/js/index.js"></script>
 </body>
 
 </html>

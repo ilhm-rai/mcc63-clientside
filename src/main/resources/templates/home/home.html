@@ -1,85 +1,94 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/layout :: head(~{this :: title})">
+<head th:replace="fragments/layout :: head(~{:: title}, ~{:: link}, ~{:: script})">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home &mdash; Metrodata</title>
+
+  <!-- Page Specific CSS File -->
+  <link rel="stylesheet" th:href="@{#}">
+
+  <!-- Page Specific JS File -->
+  <script th:src="@{#}"></script>
 </head>
 
-<body th:insert="fragments/layout :: app(~{:: .section})">
-  <section class="section">
-    <div class="section-header">
-      <h1>Home</h1>
-      <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active"><a th:href="@{#}">Home</a></div>
+<body>
+  <div id="app" th:replace="fragments/layout :: app(~{:: .section})">
+    <section class="section">
+      <div class="section-header">
+        <h1>Home</h1>
+        <div class="section-header-breadcrumb">
+          <div class="breadcrumb-item active">Home</div>
+        </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-        <div class="card card-statistic-1">
-          <div class="card-icon bg-primary">
-            <i class="fas fa-user-tie"></i>
-          </div>
-          <div class="card-wrap">
-            <div class="card-header">
-              <h4>Total Employee</h4>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-primary">
+              <i class="fas fa-user-tie"></i>
             </div>
-            <div class="card-body">
-              10
+            <div class="card-wrap">
+              <div class="card-header">
+                <h4>Total Employee</h4>
+              </div>
+              <div class="card-body">
+                10
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-danger">
+              <i class="fas fa-globe"></i>
+            </div>
+            <div class="card-wrap">
+              <div class="card-header">
+                <h4>Region</h4>
+              </div>
+              <div class="card-body">
+                42
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-warning">
+              <i class="fas fa-flag"></i>
+            </div>
+            <div class="card-wrap">
+              <div class="card-header">
+                <h4>Country</h4>
+              </div>
+              <div class="card-body">
+                1,201
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+          <div class="card card-statistic-1">
+            <div class="card-icon bg-success">
+              <i class="fas fa-circle"></i>
+            </div>
+            <div class="card-wrap">
+              <div class="card-header">
+                <h4>Online Users</h4>
+              </div>
+              <div class="card-body">
+                47
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-        <div class="card card-statistic-1">
-          <div class="card-icon bg-danger">
-            <i class="fas fa-globe"></i>
-          </div>
-          <div class="card-wrap">
-            <div class="card-header">
-              <h4>Region</h4>
-            </div>
-            <div class="card-body">
-              42
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-        <div class="card card-statistic-1">
-          <div class="card-icon bg-warning">
-            <i class="fas fa-flag"></i>
-          </div>
-          <div class="card-wrap">
-            <div class="card-header">
-              <h4>Country</h4>
-            </div>
-            <div class="card-body">
-              1,201
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-        <div class="card card-statistic-1">
-          <div class="card-icon bg-success">
-            <i class="fas fa-circle"></i>
-          </div>
-          <div class="card-wrap">
-            <div class="card-header">
-              <h4>Online Users</h4>
-            </div>
-            <div class="card-body">
-              47
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
+
 </body>
 
 </html>
