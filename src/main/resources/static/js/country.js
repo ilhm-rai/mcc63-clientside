@@ -131,10 +131,7 @@ $(document).ready(() => {
       });
     };
   });
-  getAllRegion();
-});
 
-var getAllRegion = function () {
   $.ajax({
     url: '/region/get',
     type: 'GET',
@@ -150,7 +147,7 @@ var getAllRegion = function () {
       console.log(err);
     }
   });
-};
+});
 
 var clearForm = function () {
   id = null;
@@ -159,7 +156,7 @@ var clearForm = function () {
   $('#regionId').val("");
 };
 
-function toast() {
+var toast = function () {
   const Toast = swal.mixin({
     toast: true,
     position: 'top-end',
@@ -172,4 +169,4 @@ function toast() {
   });
 
   return Toast;
-}
+};
