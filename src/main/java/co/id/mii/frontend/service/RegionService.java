@@ -82,7 +82,7 @@ public class RegionService {
         }
     }
 
-    public void update(Region region, Long id) {
+    public void update(Long id, Region region) {
         // Region oldRegion = getById(id);
         // Integer index = regions.indexOf(oldRegion);
         // regions.set(index, region);

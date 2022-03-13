@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.id.mii.frontend.model.Region;
+import co.id.mii.frontend.model.dto.ResponseData;
 import co.id.mii.frontend.service.RegionService;
 
 @Controller
@@ -60,13 +63,13 @@ public class RegionController {
         return "redirect:/region";
     }
 
-    @GetMapping("/update/{id}")
-    public String update(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, Model model) {
         model.addAttribute("region", regionService.getById(id));
         return "region/update-form";
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id, @Valid Region region,
             BindingResult result, RedirectAttributes redirect) {
         if (result.hasErrors()) {
@@ -74,7 +77,7 @@ public class RegionController {
         }
 
         redirect.addFlashAttribute("message", "Region successfully updated...");
-        regionService.update(region, id);
+        regionService.update(id, region);
         return "redirect:/region";
     }
 
@@ -87,5 +90,32 @@ public class RegionController {
     @GetMapping("/get")
     public @ResponseBody ResponseEntity<List<Region>> getAll() {
         return ResponseEntity.ok(regionService.getAll());
+    }
+
+    @PostMapping("/add")
+    public @ResponseBody ResponseEntity add(@Valid @RequestBody Region region, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+
+        regionService.create(region);
+        return ResponseEntity.ok(new ResponseData("success", "region has been created"));
+    }
+
+    @PutMapping("/update/{id}")
+    public @ResponseBody ResponseEntity update(@PathVariable("id") Long id, @Valid @RequestBody Region region,
+            BindingResult result) {
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+
+        regionService.update(id, region);
+        return ResponseEntity.ok(new ResponseData("success", "region has been updated"));
+    }
+
+    @DeleteMapping("/remove/{id}")
+    public @ResponseBody ResponseEntity remove(@PathVariable("id") Long id) {
+        regionService.delete(id);
+        return ResponseEntity.ok(new ResponseData("success", "region has been deleted"));
     }
 }
