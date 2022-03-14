@@ -87,7 +87,6 @@ public class RegionService {
         // Integer index = regions.indexOf(oldRegion);
         // regions.set(index, region);
         try {
-            region.setId(id);
             restTemplate.exchange(url.concat("/" + id), HttpMethod.PUT,
                     new HttpEntity<>(region),
                     new ParameterizedTypeReference<Region>() {

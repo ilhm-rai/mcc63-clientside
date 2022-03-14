@@ -86,7 +86,6 @@ public class CountryService {
 
     public void update(Long id, CountryDto countryDto) {
         try {
-            countryDto.setId(id);
             restTemplate.exchange(url.concat("/" + id),
                     HttpMethod.PUT,
                     new HttpEntity<>(countryDto),
