@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/layout :: head(~{:: title}, ~{:: link}, ~{:: script})">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Employee &mdash; Metrodata</title>
+
+    <!-- Page Specific CSS File -->
+    <link rel="stylesheet" href="#">
+
+    <!-- Page Specific JS File -->
+    <script th:src="@{/js/employee.js}"></script>
+</head>
+
+<body>
+    <div id="id" th:replace="fragments/layout :: app(~{:: .section})">
+        <section class="section">
+            <div class="section-header">
+                <h1>Detail Employee</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item"><a th:href="@{/home}">Home</a></div>
+                    <div class="breadcrumb-item"><a th:href="@{/employee}">Employee</a></div>
+                    <div class="breadcrumb-item active">Detail</div>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="card">
+                    <div class="card-body">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout :: head(~{:: title}, ~{:: link}, ~{:: script})">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee &mdash; Metrodata</title>
+
+    <!-- Page Specific CSS File -->
+    <link rel="stylesheet" href="#">
+
+    <!-- Page Specific JS File -->
+    <script th:src="@{/js/employee.js}"></script>
+</head>
+
+<body>
+    <div id="app" th:replace="fragments/layout :: app(~{:: .section})">
+        <section class="section">
+            <div class="section-header">
+                <h1>Employee</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item"><a th:href="@{/home}">Home</a></div>
+                    <div class="breadcrumb-item active">Employee</div>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="card">
+                    <div class="card-header">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#employeeModal"><span
+                                class="fa fa-plus mr-2"></span>Create</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped display" width="100%" cellspacing="0" id="employeeTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Fullname</th>
+                                        <th>Email</th>
+                                        <th>Username</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- List of Employees -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Fullname</th>
+                                        <th>Email</th>
+                                        <th>Username</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="employeeModalLabel">Employee Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="" id="employeeForm">
+                        <div class="form-group">
+                            <label for="fullName">Fullname</label>
+                            <input type="text" id="fullName" name="fullName" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" id="email" name="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" name="address" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Role</label>
+                            <div id="role">
+                                <!-- List of Roles -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer bg-whitesmoke">
+                    <button type="submit" class="btn btn-primary" form="employeeForm">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
