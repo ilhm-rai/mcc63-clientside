@@ -99,7 +99,7 @@ public class RegionController {
         }
 
         regionService.create(region);
-        return ResponseEntity.ok(new ResponseData("success", "region has been created"));
+        return ResponseEntity.ok(new ResponseData("success", "Region has been created"));
     }
 
     @PutMapping("/update/{id}")
@@ -110,12 +110,12 @@ public class RegionController {
         }
 
         regionService.update(id, region);
-        return ResponseEntity.ok(new ResponseData("success", "region has been updated"));
+        return ResponseEntity.ok(new ResponseData("success", "Region has been updated"));
     }
 
     @DeleteMapping("/remove/{id}")
     public @ResponseBody ResponseEntity remove(@PathVariable("id") Long id) {
         regionService.delete(id);
-        return ResponseEntity.ok(new ResponseData("success", "region has been deleted"));
+        return ResponseEntity.ok(new ResponseData("success", "Region has been deleted"));
     }
 }
