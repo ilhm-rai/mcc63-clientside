@@ -17,8 +17,8 @@ $(document).ready(() => {
       {
         sortable: false,
         render: function (data, type, row) {
-          return `<button class="btn btn-sm btn-primary me-2 js-update" data-region='${JSON.stringify(row)}'>Update</button>
-                  <button type="submit" class="btn btn-sm btn-secondary js-delete" data-id="${row.id}">Delete</button>`;
+          return `<button class="btn btn-sm btn-primary js-update" data-region='${JSON.stringify(row)}'>Edit</button>
+                  <button class="btn btn-sm btn-secondary js-delete" data-id="${row.id}">Delete</button>`;
         }
       }
     ]
