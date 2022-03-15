@@ -84,6 +84,7 @@ $(document).ready(() => {
         $('#email').val(employee.email);
         $('#address').val(employee.address);
         $('#username').val(employee.user.username);
+        $('input.roleId[type="checkbox"]').prop('checked', false);
         $.each(employee.user.roles, (i, role) => {
           $(`input[id='${role.name}-${role.id}']`).prop('checked', true);
         });

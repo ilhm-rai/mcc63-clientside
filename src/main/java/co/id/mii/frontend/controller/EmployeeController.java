@@ -44,7 +44,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
         model.addAttribute("employee", employeeService.getById(id));
         return "employee/detail";
