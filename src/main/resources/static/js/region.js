@@ -64,6 +64,7 @@ $(document).ready(() => {
   });
 
   $(document).on("click", '.js-create', function (event) {
+    id = null;
     clearForm();
   });
 
@@ -129,7 +130,6 @@ $(document).ready(() => {
 });
 
 var clearForm = function () {
-  id = null;
   $('#name').val("");
 };
 
