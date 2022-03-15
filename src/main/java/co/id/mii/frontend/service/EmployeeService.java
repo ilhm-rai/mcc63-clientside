@@ -80,7 +80,7 @@ public class EmployeeService {
             restTemplate.exchange(url.concat("/" + id),
                     HttpMethod.PUT,
                     new HttpEntity<>(employeeDto),
-                    new ParameterizedTypeReference<EmployeeDto>() {
+                    new ParameterizedTypeReference<Employee>() {
                     });
         } catch (ResponseStatusException ex) {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage());
@@ -90,7 +90,7 @@ public class EmployeeService {
     public void delete(Long id) {
         try {
             restTemplate.exchange(url.concat("/" + id), HttpMethod.DELETE, null,
-                    new ParameterizedTypeReference<Employee>() {
+                    new ParameterizedTypeReference<String>() {
                     });
         } catch (ResponseStatusException ex) {
             throw new ResponseStatusException(ex.getStatus(), ex.getMessage());
