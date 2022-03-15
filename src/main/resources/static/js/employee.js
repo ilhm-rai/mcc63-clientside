@@ -45,7 +45,7 @@ $(document).ready(() => {
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
-          url: '/employee/delete/' + this.dataset.id,
+          url: '/employee/remove/' + this.dataset.id,
           type: 'DELETE',
           success: (res) => {
             toast().fire({
@@ -67,18 +67,18 @@ $(document).ready(() => {
   });
 
   $(document).on("click", '.js-create', function (event) {
+    id = null;
     clearForm();
   });
 
   $(document).on("click", '.js-update', function (event) {
-    let employee = {};
     id = this.dataset.id;
 
     $.ajax({
       url: '/employee/get/' + id,
       type: 'GET',
       success: (res) => {
-        employee = res;
+        let employee = res;
         $('#employeeModal').modal('show');
         $('#fullName').val(employee.fullName);
         $('#email').val(employee.email);
@@ -130,7 +130,10 @@ $(document).ready(() => {
           $('#employeeModal').modal('hide');
         },
         error: (err) => {
-          console.log(err);
+          toast().fire({
+            icon: 'error',
+            title: err.message
+          });
         }
       }).done(function (res) {
         clearForm();
@@ -151,7 +154,10 @@ $(document).ready(() => {
           $('#employeeModal').modal('hide');
         },
         error: (err) => {
-          console.log(err);
+          toast().fire({
+            icon: 'error',
+            title: err.message
+          });
         }
       }).done(function (res) {
         $('#employeeTable').DataTable().ajax.reload();
@@ -183,12 +189,12 @@ $(document).ready(() => {
 });
 
 var clearForm = function () {
-  id = null;
   $('#fullName').val("");
   $('#email').val("");
   $('#address').val("");
   $('#username').val("");
   $('#password').val("");
+  $('input.roleId[type="checkbox"]').prop('checked', false);
 };
 
 var toast = function () {
