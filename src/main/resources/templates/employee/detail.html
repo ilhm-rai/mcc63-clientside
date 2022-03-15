@@ -28,7 +28,35 @@
             <div class="section-body">
                 <div class="card">
                     <div class="card-body">
-
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody class="border-top" style="border-top-color: #f6f6f6 !important;">
+                                    <tr>
+                                        <th scope="row">Fullname</th>
+                                        <td th:text="${employee.fullName}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Address</th>
+                                        <td th:text="${employee.address}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Email</th>
+                                        <td th:text="${employee.email}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Username</th>
+                                        <td th:text="${employee.user.username}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Roles</th>
+                                        <td>
+                                            <div class="badge badge-success" th:each="role: ${employee.user.roles}"
+                                                th:text="${role.name}"></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
