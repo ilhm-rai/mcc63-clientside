@@ -1,6 +1,7 @@
 $(document).ready(() => {
   let id = null;
-  var t = $('#regionTable').DataTable({
+  let _csrf_token = $('meta[name="_csrf"]').attr('content');
+  var regionTable = $('#regionTable').DataTable({
     "ajax": {
       "url": '/region/get',
       "dataSrc": ''
@@ -24,8 +25,8 @@ $(document).ready(() => {
     ]
   });
 
-  t.on('order.dt search.dt', function () {
-    t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+  regionTable.on('order.dt search.dt', function () {
+    regionTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
       cell.innerHTML = i + 1;
     });
   }).draw();
@@ -44,6 +45,9 @@ $(document).ready(() => {
         $.ajax({
           url: '/region/remove/' + this.dataset.id,
           type: 'DELETE',
+          headers: {
+            'X-CSRF-TOKEN': _csrf_token
+          },
           success: (res) => {
             toast().fire({
               icon: 'success',
@@ -57,7 +61,7 @@ $(document).ready(() => {
             });
           }
         }).done(function (res) {
-          $('#regionTable').DataTable().ajax.reload();
+          regionTable.ajax.reload();
         });
       }
     });
@@ -88,6 +92,9 @@ $(document).ready(() => {
         url: '/region/update/' + id,
         type: 'PUT',
         contentType: 'application/json',
+        headers: {
+          'X-CSRF-TOKEN': _csrf_token
+        },
         data: JSON.stringify(region),
         success: (res) => {
           toast().fire({
@@ -102,13 +109,16 @@ $(document).ready(() => {
         }
       }).done(function (res) {
         clearForm();
-        $('#regionTable').DataTable().ajax.reload();
+        regionTable.ajax.reload();
       });
     } else {
       $.ajax({
         url: '/region/add',
         type: 'POST',
         contentType: 'application/json',
+        headers: {
+          'X-CSRF-TOKEN': _csrf_token
+        },
         data: JSON.stringify(region),
         success: (res) => {
           toast().fire({
@@ -122,7 +132,7 @@ $(document).ready(() => {
           console.log(err);
         }
       }).done(function (res) {
-        $('#regionTable').DataTable().ajax.reload();
+        regionTable.ajax.reload();
       });
     };
   });
