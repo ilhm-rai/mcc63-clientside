@@ -3,6 +3,7 @@ package co.id.mii.frontend.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +13,12 @@ import co.id.mii.frontend.model.dto.LoginRequestData;
 import co.id.mii.frontend.service.LoginService;
 
 @Controller
-public class LoginController {
+public class AuthController {
 
     private LoginService loginService;
 
     @Autowired
-    public LoginController(LoginService loginService) {
+    public AuthController(LoginService loginService) {
         this.loginService = loginService;
     }
 
@@ -34,5 +35,11 @@ public class LoginController {
 
         System.out.println(loginService.login(loginRequestData));
         return "redirect:/home";
+    }
+
+    @PostMapping("/logout")
+    public String logout() {
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return "redirect:/login?logout=true";
     }
 }

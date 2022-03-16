@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
-import co.id.mii.frontend.helper.RequestHeader;
 import co.id.mii.frontend.model.Country;
 import co.id.mii.frontend.model.dto.CountryDto;
 
@@ -44,7 +43,7 @@ public class CountryService {
         List<Country> countries = new ArrayList<>();
         try {
             ResponseEntity<List<Country>> response = restTemplate
-                    .exchange(url, HttpMethod.GET, new HttpEntity<>(RequestHeader.getHeaders()),
+                    .exchange(url, HttpMethod.GET, null,
                             new ParameterizedTypeReference<List<Country>>() {
                             });
 
@@ -78,7 +77,7 @@ public class CountryService {
     public void create(CountryDto countryDto) {
         try {
             restTemplate.exchange(url, HttpMethod.POST,
-                    new HttpEntity<>(countryDto, RequestHeader.getHeaders()),
+                    new HttpEntity<>(countryDto),
                     new ParameterizedTypeReference<CountryDto>() {
                     });
         } catch (ResponseStatusException ex) {

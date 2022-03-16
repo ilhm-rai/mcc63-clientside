@@ -15,7 +15,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
-import co.id.mii.frontend.helper.RequestHeader;
 import co.id.mii.frontend.model.Region;
 
 @Service
@@ -35,7 +34,7 @@ public class RegionService {
         List<Region> regions = new ArrayList<>();
         try {
             ResponseEntity<List<Region>> response = restTemplate
-                    .exchange(url, HttpMethod.GET, new HttpEntity<>(RequestHeader.getHeaders()),
+                    .exchange(url, HttpMethod.GET, null,
                             new ParameterizedTypeReference<List<Region>>() {
                             });
 

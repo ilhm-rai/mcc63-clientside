@@ -10,15 +10,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class RequestHeader {
 
     public static HttpHeaders getHeaders() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return new HttpHeaders() {
             {
-                String auth = authentication.getName() + ":" + authentication.getCredentials().toString();
+                String auth = getAuth().getName() + ":" + getAuth().getCredentials().toString();
                 byte[] encodeAuth = Base64.encodeBase64(
                         auth.getBytes(Charset.forName("US-ASCII")));
                 String authHeader = "Basic " + new String(encodeAuth);
                 set("Authorization", authHeader);
             }
         };
+    }
+
+    public static Authentication getAuth() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }
