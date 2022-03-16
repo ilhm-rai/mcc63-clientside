@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/layout :: head(~{this :: title}, ~{this :: link}, ~{this :: script})">
+<head th:replace="fragments/layout :: head(~{this :: title})">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Region &mdash; Metrodata</title>
-
-    <!-- Page Specific CSS File -->
-    <link rel="stylesheet" th:href="@{#}">
-
-    <!-- Page Specific JS File -->
-    <script th:src="@{/js/region.js}"></script>
 </head>
 
 <body>
@@ -81,6 +75,8 @@
             </div>
         </div>
     </div>
+    <!-- Page Specific JS File -->
+    <script th:src="@{/js/region.js}"></script>
 </body>
 
 </html>

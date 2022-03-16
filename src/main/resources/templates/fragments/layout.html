@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="head(title, links, scripts)">
+<head th:fragment="head(title)">
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title th:replace="${title}">Title &mdash; Metrodata</title>
@@ -16,9 +16,6 @@
   <!-- Template CSS -->
   <link rel="stylesheet" th:href="@{/css/style.css}">
   <link rel="stylesheet" th:href="@{/css/components.css}">
-
-  <!-- Page Specific CSS File -->
-  <th:block th:replace="${links}"></th:block>
 
   <link rel="shortcut icon" th:href="@{/img/metrodata.ico}" type="image/x-icon">
 
@@ -36,9 +33,6 @@
   <!-- Template JS File -->
   <script th:src="@{/js/scripts.js}"></script>
   <script th:src="@{/js/custom.js}"></script>
-
-  <!-- Page Specific JS File -->
-  <th:block th:replace="${scripts}"></th:block>
 </head>
 
 <body>
